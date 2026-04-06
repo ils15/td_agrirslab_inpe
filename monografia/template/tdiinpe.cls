@@ -267,13 +267,18 @@
 
 \ProcessOptions
 
-%%% Pacote da ABNTeX para referências dentro das normas %%%
-\gdef\@sepbr{no} %% yes ou no para pagebackref em abnt-verbatim-entry
-\@ifpackageloaded{backref}{}{\gdef\@sepbr{yes}} %% backref não é compatível com abnt-verbatim-entry ainda
-\ifHTML\gdef\@sepbr{no}
-\gdef\@tipocitacao{num}
-\else\fi
-\usepackage[\@tipocitacao,abnt-emphasize=bf,abnt-etal-cite=2,abnt-etal-list=0,abnt-repeated-title-omit=yes,abnt-show-options=no,abnt-verbatim-entry=\@sepbr,abnt-url-package=url]{abntex2cite}
+%%% Sistema moderno de Bibliografias com biblatex-abnt (atualizado para normas ABNT 2023) %%%
+%% Compatível com múltiplos engines: pdflatex, xelatex, lualatex
+%% Backend: biber (processador moderno de referências)
+\RequirePackage[
+  style=abnt,               % Style oficial ABNT via biblatex-abnt
+  backend=biber,            % Backend moderno - precisa: pdflatex ... biber ... pdflatex
+  language=portuguese,      % Português brasileiro
+  hyperref=true,            % Integração com hyperref para links
+  url=true,                 % Mostrar URLs nas referências
+  doi=true,                 % Mostrar DOI si disponível
+  isbn=true                 % Mostrar ISBN se disponível
+]{biblatex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % configuracao das margens 

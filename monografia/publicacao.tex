@@ -5,10 +5,10 @@
 %SemFolhaAprovacao,
 %SemImagens,
 %CitacaoNumerica, %% o padrão é citação tipo autor-data
-%PublicacaoDissOuTese, %% (é também o "default") com ficha catal. e folha de aprovação em branco. Caso tenha lista de símbolos e lista de siglas e abreviaturas retirar os comentários dos arquivos siglas.tex e abreviaturasesiglas.tex. Retirar também os comentários indicados nesse arquivo, nos includes
+PublicacaoDissOuTese, %% (é também o "default") com ficha catal. e folha de aprovação em branco. Caso tenha lista de símbolos e lista de siglas e abreviaturas retirar os comentários dos arquivos siglas.tex e abreviaturasesiglas.tex. Retirar também os comentários indicados nesse arquivo, nos includes
 %PublicacaoArtigoOuRelatorio, %% texto sequencial, sem quebra de páginas nem folhas em branco
 %PublicacaoProposta, %% igual tese/dissertação, mas sem ficha catal. e fol. de aprov.
-ExamePropostaOuQualificacao, %% Versão simplificada da opcao publicacao proposta - não inclui elementos de publicação
+%ExamePropostaOuQualificacao, %% Versão simplificada da opcao publicacao proposta - não inclui elementos de publicação
 %PublicacaoLivro, %% com capítulos
 %PublicacaoLivro,SemFormatacaoCapitulo, %% sem capítulos
 english,portuguese %% para os documentos em Português com abstract.tex em Inglês
@@ -26,8 +26,9 @@ english,portuguese %% para os documentos em Português com abstract.tex em Ingl�
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% ifthen,calc,graphicx,color,inputenc,babel,hyphenat,array,setspace, %
 %%% bigdelim,multirow,supertabular,tabularx,longtable,lastpage,lscape, %
-%%% rotate,caption2,amsmath,amssymb,amsthm,subfigure,tocloft,makeidx,  %
-%%% eso-pic,calligra,hyperref,ae,fontenc                               %
+%%% rotate,caption,amsmath,amssymb,amsthm,subfigure,tocloft,makeidx,   %
+%%% eso-pic,calligra,hyperref,lmodern,fontenc,biblatex[style=abnt]     %
+%%% (substituídos: ae→lmodern, caption2→caption, abntex2cite→biblatex) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% insira neste campo, comandos de LaTeX %%%
 %%% \usepackage{_exemplo_}
@@ -37,9 +38,12 @@ english,portuguese %% para os documentos em Português com abstract.tex em Ingl�
 %\watermark{Revisão No. ##} %% use o comando \watermark para identificar a versão de seu documento
 %% comente este comando quando for gerar a versão final
 \usepackage{rotating}
-\usepackage{dsfont}
+%\usepackage{dsfont}          %% removido: não é crítico, pode instalar após
 \usepackage{comment}
 \input{./configuracao} %% faça as modificações pertinentes no arquivo configuracao.tex
+
+%% Define recurso bibliográfico para biblatex (ABNT moderno 2023)
+\addbibresource{./bib/referencia.bib}
 
 \makeindex  %% não alterar, gera INDEX, caso haja algum termo indexado no texto
 
@@ -82,15 +86,14 @@ english,portuguese %% para os documentos em Português com abstract.tex em Ingl�
 %% note que deverá haver um arquivo _meu_arquivo_.tex (com extensão) no diretório _pasta_do_arquivo_
 
 % PARA PUBLICAÇÕES EM INGLÊS:
-%% Descomentar essa linha para publicações em inglês
-%\bibliographystyle{./template/abnt-alfenglish}
+%% Com biblatex, usar: style=abnt (automático detecta português/inglês)
 
 % PARA PUBLICAÇÕES EM PORTUGUÊS:
-%% comentar essa linha para publicações em inglês
-\bibliographystyle{./template/abnt-alfportuguese}
+%% Define resource bib para o sistema moderno biblatex (adicionar no preâmbulo também)
+\addbibresource{./bib/referencia.bib}
 
-%% Bibliografia %% não alterar %% obrigatório %testebib
-\bibliography{./bib/referencia} %% aponte para seu arquivo de bibliografia no formato bibtex (p.ex: referencia.bib)
+%% Nota: a versão atual do template usa biblatex com style=abnt (ABNT 2023)
+%% Compilação: pdflatex documento.tex && biber documento && pdflatex documento.tex
 
 %\include{./docs/09_glossario} %% insira os termos do glossário no arquivo glossario.tex %% opcional
 
@@ -102,6 +105,10 @@ english,portuguese %% para os documentos em Português com abstract.tex em Ingl�
 \include{./docs/11_02_anexo2}
 \include{./docs/11_03_anexo3}
 
-\inicioIndice
+%\inicioIndice  %% comentado temporariamente - compatibilidade com biblatex
 \include{./docs/12_contracapa}
+
+% Impressão de referências com biblatex + ABNT
+\printbibliography[title=Referências]
+
 \end{document}
